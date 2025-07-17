@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <title>Finance Made Simple</title>
+    <script src="{{ url_for('static', filename='smooth-scrolling.js') }}"></script>
+    <link rel="stylesheet" href="static/index.css">
+
+  </head>
+  <body class="smooth-scroll">
+    <div id="progress-bar-container">
+      <div id="progress-bar"></div>
+    </div>
+
+    <header class="site-header">
+      <a href="/" class="logo">
+        Finance Made Simple <span class="beta-tag-header">BETA</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/budgeting">Budgeting</a>
+        <a href="/investing">Investments</a>
+        <a href="/info-graphics">Infographics</a>
+      </nav>
+    </header>
+
+    <div class="main-wrapper">
+      <main>
+        <section class="hero full-height">
+          <div class="hero-content">
+            <div style="position: relative; display: inline-block;">
+              <h1 class="hero-title" style="margin: 0; padding-bottom: 1rem;">Finance Made Simple</h1>
+              <div class="beta-tag-wrapper">
+                <span class="beta-tag">BETA</span>
+                <div class="beta-tooltip">
+                  We're still testing/improving the site. Please <a href="https://docs.google.com/forms/d/1POhSJjjSTzpZc_6tpnZDJTxuOH8M8O78M055ZPQ29UM/" target="_blank">give us your feedback</a>.
+                </div>
+              </div>
+            </div>
+            <p class="hero-subtitle">Helping teens take control of their money, one scroll at a time.</p>
+            <div class="cta-buttons">
+              <a href="/budgeting" class="cta">Start Budgeting</a>
+              <!-- <a href="/quizzes" class="cta secondary">Take the Quiz</a> -->
+            </div>
+          </div>
+        </section>
+
+        <section class="features scroll-reveal">
+          <div class="feature-block">
+            <div class="card">
+              <h3>📊 Budgeting</h3>
+              <p>Track your money and set spending limits with confidence.</p>
+              <a href="/budgeting">Learn More</a>
+            </div>
+          </div>
+          <div class="feature-block">
+            <div class="card">
+              <h3>📈 Investing</h3>
+              <p>Understand the basics of stocks, ETFs, and long-term growth.</p>
+              <a href="/investing">Learn More</a>
+            </div>
+          </div>
+          <div class="feature-block">
+            <div class="card">
+              <h3>🧠 Infographics</h3>
+              <p>Visual breakdowns of money concepts that make things click.</p>
+              <a href="/info-graphics">Explore</a>
+            </div>
+          </div>
+          <div class="feature-block">
+            <div class="card">
+              <h3>📈 Stock Market</h3>
+              <p>Coming soon!</p>
+              <a href="/">View</a>
+            </div>
+          </div>
+          <div class="feature-block">
+            <div class="card">
+              <h3>📰 Finance News</h3>
+              <p>Coming soon!</p>
+              <a href="/">Read</a>
+            </div>
+          </div>
+          <div class="feature-block">
+            <div class="card">
+              <h3>💬 Discussion Forum</h3>
+              <p>Coming soon!</p>
+              <a href="/">Chat</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Finance Made Simple</p>
+      <p><a href="https://docs.google.com/forms/d/1POhSJjjSTzpZc_6tpnZDJTxuOH8M8O78M055ZPQ29UM/" target="_blank">💬 Give Feedback</a></p>
+    </footer>
+
+
+    <script>
+      // Feature block scroll reveal (existing)
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else {
+            entry.target.classList.remove('visible');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      document.querySelectorAll('.feature-block').forEach(block => {
+        observer.observe(block);
+      });
+
+      // JavaScript for Header and Progress Bar (new and updated)
+      document.addEventListener('DOMContentLoaded', () => {
+        const progressBar = document.getElementById('progress-bar');
+        const siteHeader = document.querySelector('header.site-header');
+
+        const handleScroll = () => {
+          // Progress Bar Logic
+          const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+          const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+          const totalScrollableHeight = scrollHeight - clientHeight;
+          const progress = totalScrollableHeight > 0 ? (scrollTop / totalScrollableHeight) * 100 : 100;
+          progressBar.style.width = progress + '%';
+
+          // Header Visibility Logic
+          if (scrollTop > 0) {
+            siteHeader.classList.add('hidden');
+          } else {
+            siteHeader.classList.remove('hidden');
+          }
+        };
+
+        // Initial check on load
+        handleScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', handleScroll);
+      });
+    </script>
+  </body>
+</html>

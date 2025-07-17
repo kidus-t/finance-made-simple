@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Budgeting Tips</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <script src="{{ url_for('static', filename='smooth-scrolling.js') }}"></script>
+  <link rel="stylesheet" href="static/budgeting.css">
+
+</head>
+<body>
+  <div id="progress-bar-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <header class="site-header">
+    <a href="/" class="logo">
+      Finance Made Simple <span class="beta-tag-header">BETA</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/budgeting">Budgeting</a>
+      <a href="/investing">Investments</a>
+      <a href="/info-graphics">Infographics</a>
+      <!-- <a href="/budgeting">Quiz</a> -->
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="left-panel">
+      <h2 id="tip-title">1. Monitor Your Earnings and Outlays</h2>
+    </div>
+
+    <div class="right-panel">
+      <section class="tip-section" data-title="1. Monitor Your Earnings and Outlays">
+        <p>You must be aware of what is coming in and going out before creating a budget.</p>
+        <ul>
+          <li><strong>Track Every Dollar:</strong> Make use of a basic spreadsheet or apps like Mint or YNAB.</li>
+          <li><strong>Keep a record of all your sources:</strong> Include employment, side projects, allowances, etc.</li>
+          <li><strong>Divide spending:</b> Necessities, wants, and debt or savings.</li>
+        </ul>
+        <p>💡 <strong>Advice:</strong> Look for patterns in your bank statements from the previous one to two months.</p>
+      </section>
+
+      <section class="tip-section" data-title="2. Establish Expense Boundaries">
+        <p>Don't merely speculate; give each dollar a purpose.</p>
+        <ul>
+          <li><strong>Monthly Caps:</strong> Establish strict spending caps for each category, such as $150 for dining out and $50 for entertainment.</li>
+          <li><strong>Track Weekly:</strong> Keep an eye on things in real time to prevent going over budget.</li>
+          <li><strong>Modify as necessary:</strong> Budgets change. Raise it and make a cut somewhere else if groceries continue to go over.</li>
+        </ul>
+        <p>📊 <strong>Expert Tip:</strong> Utilize color-coded categories to quickly identify your areas of weakness.</p>
+      </section>
+
+      <section class="tip-section" data-title="3. Follow the 50/30/20 Rule">
+        <p>This is a classic framework to keep your money balanced:</p>
+        <ul>
+          <li><strong>50% Needs:</strong> Rent, bills, groceries, transport.</li>
+          <li><strong>30% Wants:</strong> Shopping, Netflix, eating out.</li>
+          <li><strong>20% Savings:</strong> Emergency fund, savings goals, debt payoff.</li>
+          <li><strong>No beta tag here, as it was not present in the original code for this page.</strong></li>
+        </ul>
+        <p>🔄 <strong>For example:</strong> If your monthly income is $1,000:</p>
+        <p>$300 represents wants, $500 represents needs, and $200 represents debt or savings.</p>
+      </section>
+
+      <section class="tip-section" data-title="4. Put Your Savings on Autopilot">
+        <p>Set it and forget it to make saving simple.</p>
+        <ul>
+          <li><strong>Auto-Transfers:</strong> Set up your bank to transfer funds to savings each time you get paid.</li>
+          <li><strong>Split Deposits:</strong> Put a portion of your earnings directly into savings.</li>
+          <li><strong>Round-Ups:</strong> Save the change by using apps that round up your purchases.</li>
+        </ul>
+        <p>🧠 <strong>Why?</strong> Automation removes willpower from the equation.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Finance Made Simple</p>
+    <p><a href="https://docs.google.com/forms/d/1POhSJjjSTzpZc_6tpnZDJTxuOH8M8O78M055ZPQ29UM/" target="_blank">💬 Give Feedback</a></p>
+  </footer>
+
+  <script>
+    let activeTitle = '';
+
+    function updateTitle(newTitle) {
+      const titleEl = document.getElementById('tip-title');
+      if (newTitle !== activeTitle) {
+        titleEl.classList.remove('fade-in');
+        titleEl.classList.add('fade-out');
+        titleEl.addEventListener('transitionend', function handler() {
+          titleEl.textContent = newTitle;
+          titleEl.classList.remove('fade-out');
+          titleEl.classList.add('fade-in');
+          activeTitle = newTitle;
+        }, { once: true });
+      }
+    }
+
+    const sections = document.querySelectorAll('.tip-section');
+    const titleEl = document.getElementById('tip-title');
+    titleEl.classList.add('fade-in');
+    activeTitle = titleEl.textContent;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          const title = entry.target.getAttribute('data-title');
+          updateTitle(title);
+        }
+      });
+    }, {
+      threshold: 0.5
+    });
+
+    sections.forEach(section => observer.observe(section));
+
+    // JavaScript for the Progress Bar and Header Visibility
+    document.addEventListener('DOMContentLoaded', () => {
+      const progressBar = document.getElementById('progress-bar');
+      const siteHeader = document.querySelector('header.site-header');
+
+      const handleScroll = () => {
+        // Progress Bar Logic
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        const totalScrollableHeight = scrollHeight - clientHeight;
+        const progress = totalScrollableHeight > 0 ? (scrollTop / totalScrollableHeight) * 100 : 100;
+        progressBar.style.width = progress + '%';
+
+        // Header Visibility Logic
+        // This page has a different header behavior on mobile (sticky, always visible)
+        // Ensure this logic doesn't hide it on mobile, or adjust as needed.
+        if (window.innerWidth > 800) { // Apply hide/show only on larger screens
+            if (scrollTop > 0) {
+              siteHeader.classList.add('hidden');
+            } else {
+              siteHeader.classList.remove('hidden');
+            }
+        } else { // On mobile, ensure it's always visible if it's sticky
+            siteHeader.classList.remove('hidden');
+        }
+      };
+
+      // Initial check on load
+      handleScroll();
+
+      // Listen for scroll events
+      window.addEventListener('scroll', handleScroll);
+      // Also listen for resize to re-evaluate header visibility logic
+      window.addEventListener('resize', handleScroll);
+    });
+  </script>
+</body>
+</html>

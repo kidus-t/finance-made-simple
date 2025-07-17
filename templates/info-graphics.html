@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Infographics - Finance Made Simple</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <script src="{{ url_for('static', filename='smooth-scrolling.js') }}"></script>
+  <link rel="stylesheet" href="static/info-graphics.css">
+
+</head>
+<body>
+  <div id="progress-bar-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <header class="site-header">
+    <a href="/" class="logo">
+      Finance Made Simple <span class="beta-tag-header">BETA</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/budgeting">Budgeting</a>
+      <a href="/investing">Investments</a>
+      <a href="/info-graphics">Infographics</a>
+      </nav>
+  </header>
+
+  <main class="main-content-wrapper">
+    <section>
+      <div class="infographic-text">If you save $5 a day starting at 18, you could retire a millionaire. Compound interest can turn your coffee money into over $1M by 65 if invested in an S&P 500 index fund.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='save_5_a_day.webp') }}" alt="Infographic showing $5/day savings compounding into $1M">
+    </section>
+    <section>
+      <div class="infographic-text">The power of compounding interest: Small savings grow into large wealth over time.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='compound_interest.webp') }}" alt="Infographic showing compound interest growth">
+    </section>
+    <section>
+      <div class="infographic-text">Your brain reacts to losing money like it’s in physical pain. Neuroscience shows loss activates the same areas as physical injury—it's called loss aversion.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='money_pain_brain.webp') }}" alt="Infographic about brain reaction to money loss">
+    </section>
+    <section>
+      <div class="infographic-text">Understanding the 50/30/20 budget rule for easy money management.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='50-30-20_rule.webp') }}" alt="Infographic explaining 50/30/20 rule">
+    </section>
+    <section>
+      <div class="infographic-text">The first job you take impacts your lifetime net worth. Starting in a higher-paying industry at 22 can grow your earnings by hundreds of thousands.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='first_job_net_worth.webp') }}" alt="Infographic about job choice affecting net worth">
+    </section>
+    <section>
+      <div class="infographic-text">Diversification is key: Don't put all your eggs in one basket.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='diversification.webp') }}" alt="Infographic illustrating investment diversification">
+    </section>
+    <section>
+      <div class="infographic-text">Credit scores start at 18, but most young people don’t know it. Building credit early saves thousands on future loans, rent, and more.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='credit_score_18.webp') }}" alt="Infographic about credit score starting at 18">
+    </section>
+     <section>
+      <div class="infographic-text">How inflation eats into your money over time.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='inflation.webp') }}" alt="Infographic on the effects of inflation">
+    </section>
+    <section>
+      <div class="infographic-text">Banks made over $11 billion on overdraft fees last year—mostly from young people. One $2 snack could cost $35 if you’re not careful.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='overdraft_fees.webp') }}" alt="Infographic about overdraft fees targeting young people">
+    </section>
+    <section>
+      <div class="infographic-text">You can file your taxes for free—but companies pay to hide that. Over 70% of Americans qualify for Free File, yet pay because of lobbying by tax prep giants.</div>
+      <img class="infographic-img" src="{{ url_for('static', filename='free_file_scandal.webp') }}" alt="Infographic about free tax filing being hidden">
+    </section>
+
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Finance Made Simple</p>
+    <p><a href="https://docs.google.com/forms/d/1POhSJjjSTzpZc_6tpnZDJTxuOH8M8O78M055ZPQ29UM/" target="_blank">💬 Give Feedback</a></p>
+  </footer>
+
+  <script>
+    // JavaScript for the Progress Bar
+    document.addEventListener('DOMContentLoaded', () => {
+      const progressBar = document.getElementById('progress-bar');
+      const siteHeader = document.querySelector('header.site-header');
+
+      const handleScroll = () => {
+        // Progress Bar Logic
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        const totalScrollableHeight = scrollHeight - clientHeight;
+        const progress = totalScrollableHeight > 0 ? (scrollTop / totalScrollableHeight) * 100 : 100;
+        progressBar.style.width = progress + '%';
+
+        // Header Visibility Logic
+        // This page also has a sticky header on mobile.
+        if (window.innerWidth > 800) { // Apply hide/show only on larger screens
+            if (scrollTop > 0) {
+              siteHeader.classList.add('hidden');
+            } else {
+              siteHeader.classList.remove('hidden');
+            }
+        } else { // On mobile, ensure it's always visible if it's sticky
+            siteHeader.classList.remove('hidden');
+        }
+      };
+
+      // Initial check on load
+      handleScroll();
+
+      // Listen for scroll events
+      window.addEventListener('scroll', handleScroll);
+      // Also listen for resize to re-evaluate header visibility logic
+      window.addEventListener('resize', handleScroll);
+    });
+
+    // JavaScript for section visibility animations
+    const sections = document.querySelectorAll('section');
+    const revealOnScroll = () => {
+      const trigger = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) {
+          sec.classList.add('visible');
+        } else {
+          // Optional: Remove 'visible' if scrolling back up
+          // sec.classList.remove('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
+
+</body>
+</html>
